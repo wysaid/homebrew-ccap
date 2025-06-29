@@ -6,7 +6,7 @@ class Ccap < Formula
   desc "High-performance, lightweight cross-platform C++ camera capture library"
   homepage "https://github.com/wysaid/CameraCapture"
   url "https://github.com/wysaid/CameraCapture/archive/refs/tags/v1.0.0.tar.gz"
-  sha256 "sha256:39f1255f3721815687b0f914a736e0b616b3315afd16aa3f31190b7c1ccd6967"
+  sha256 "f0c5e3e6144414df531394286ab2e7632f345d97b4cc561eb0ffea6476c5035f"
   license "MIT"
   head "https://github.com/wysaid/CameraCapture.git", branch: "main"
 
