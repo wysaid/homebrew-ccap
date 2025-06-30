@@ -5,8 +5,8 @@
 class Ccap < Formula
   desc "High-performance, lightweight cross-platform C++ camera capture library"
   homepage "https://github.com/wysaid/CameraCapture"
-  url "https://github.com/wysaid/CameraCapture/archive/refs/tags/v1.0.0.tar.gz"
-  sha256 "f0c5e3e6144414df531394286ab2e7632f345d97b4cc561eb0ffea6476c5035f"
+  url "https://github.com/wysaid/CameraCapture/archive/refs/tags/v1.0.1.tar.gz"
+  sha256 "fbce627a3409f63daaea008105884b0a928cefc6f1e47140833df00fc51a0638"
   license "MIT"
   head "https://github.com/wysaid/CameraCapture.git", branch: "main"
 
@@ -16,6 +16,7 @@ class Ccap < Formula
   def install
     system "cmake", "-S", ".", "-B", "build",
            "-DCMAKE_BUILD_TYPE=Release",
+           "-DCMAKE_INSTALL_PREFIX=#{prefix}",
            "-DCCAP_BUILD_EXAMPLES=OFF",
            "-DCCAP_BUILD_TESTS=OFF",
            "-DCCAP_INSTALL=ON",

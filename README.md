@@ -42,15 +42,55 @@ After installation, you can use ccap in your C++ projects:
 ### CMake Integration
 
 ```cmake
+cmake_minimum_required(VERSION 3.14)
+project(my_project)
+
+set(CMAKE_CXX_STANDARD 17)
+
+# Find ccap package
 find_package(ccap REQUIRED)
-target_link_libraries(your_app ccap::ccap)
+
+add_executable(my_app main.cpp)
+target_link_libraries(my_app ccap::ccap)
+
+# macOS requires additional system frameworks
+if(APPLE)
+    target_link_libraries(my_app 
+        "-framework Foundation"
+        "-framework AVFoundation" 
+        "-framework CoreVideo"
+        "-framework CoreMedia"
+        "-framework Accelerate"
+    )
+endif()
 ```
 
 ### pkg-config Integration
 
 ```bash
+# Set PKG_CONFIG_PATH (if needed)
+export PKG_CONFIG_PATH="$(brew --prefix)/lib/pkgconfig:$PKG_CONFIG_PATH"
+
 # Compile your project
 g++ -std=c++17 main.cpp $(pkg-config --cflags --libs ccap) -o my_app
+```
+
+### Manual Compilation
+
+```bash
+# Find installation path
+CCAP_PREFIX=$(brew --prefix ccap)
+
+# Compile directly
+g++ -std=c++17 main.cpp \
+    -I"$CCAP_PREFIX/include" \
+    -L"$CCAP_PREFIX/lib" -lccap \
+    -framework Foundation \
+    -framework AVFoundation \
+    -framework CoreVideo \
+    -framework CoreMedia \
+    -framework Accelerate \
+    -o my_app
 ```
 
 ### Basic Usage Example
