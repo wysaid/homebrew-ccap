@@ -132,7 +132,7 @@ int main() {
 
 This tap tracks the releases from the main [ccap repository](https://github.com/wysaid/CameraCapture).
 
-- Latest stable: v1.0.0
+- Latest stable: v1.0.1
 - Development: Use `brew install --HEAD ccap` for latest development version
 
 ## Formula Information
