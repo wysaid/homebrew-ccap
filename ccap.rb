@@ -11,6 +11,8 @@ class Ccap < Formula
   head "https://github.com/wysaid/CameraCapture.git", branch: "main"
 
   depends_on "cmake" => :build
+  # Linux is not supported yet
+  depends_on macos: :high_sierra
 
   def install
     system "cmake", "-S", ".", "-B", "build",
