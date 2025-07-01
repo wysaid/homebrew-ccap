@@ -1,7 +1,3 @@
-# typed: strict
-# frozen_string_literal: true
-
-# Formula for ccap camera capture library
 class Ccap < Formula
   desc "High-performance, lightweight cross-platform C++ camera capture library"
   homepage "https://github.com/wysaid/CameraCapture"
@@ -12,7 +8,7 @@ class Ccap < Formula
 
   depends_on "cmake" => :build
   # Linux is not supported yet
-  depends_on macos: :high_sierra
+  depends_on :macos
 
   def install
     system "cmake", "-S", ".", "-B", "build",
