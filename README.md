@@ -3,16 +3,17 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Homebrew](https://img.shields.io/badge/Homebrew-ccap-blue.svg)](https://github.com/wysaid/homebrew-ccap)
 
-A [Homebrew](https://brew.sh/) tap for [ccap](https://github.com/wysaid/CameraCapture) - a high-performance, lightweight cross-platform C++ camera capture library.
+A [Homebrew](https://brew.sh/) tap for [ccap](https://github.com/wysaid/CameraCapture) - a high-performance cross-platform camera capture library with hardware-accelerated pixel format conversion and complete C++/C APIs.
 
 ## What is ccap?
 
-ccap (CameraCapture) is a cross-platform C++ library that provides:
+ccap (CameraCapture) is a cross-platform camera capture library that provides:
 
-- **High Performance**: Hardware-accelerated pixel format conversion with up to 10x speedup
+- **High Performance**: Hardware-accelerated pixel format conversion with up to 10x speedup (AVX2, Apple Accelerate)
 - **Lightweight**: Zero external dependencies - uses only system frameworks  
-- **Cross Platform**: Windows (DirectShow), macOS/iOS (AVFoundation)
+- **Cross Platform**: Windows (DirectShow), macOS/iOS (AVFoundation), Linux (V4L2)
 - **Multiple Formats**: RGB, BGR, YUV (NV12/I420) with automatic conversion
+- **Dual Language APIs**: ✨ Complete Pure C Interface - Both modern C++ API and traditional C99 interface for various project integration and language bindings
 - **Production Ready**: Comprehensive test suite with 95%+ accuracy validation
 - **Virtual Camera Support**: Compatible with OBS Virtual Camera and similar tools
 

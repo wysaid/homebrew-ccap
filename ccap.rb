@@ -1,8 +1,8 @@
 class Ccap < Formula
-  desc "High-performance, lightweight cross-platform C++ camera capture library"
+  desc "High-performance cross-platform camera capture library with hardware-accelerated pixel format conversion and complete C++/C APIs"
   homepage "https://github.com/wysaid/CameraCapture"
-  url "https://github.com/wysaid/CameraCapture/archive/refs/tags/v1.0.1.tar.gz"
-  sha256 "57ec463aa4939fdafb6d36a03ea301ce60eeef058d62b9822699953d052e1b7b"
+  url "https://github.com/wysaid/CameraCapture/archive/refs/tags/v1.2.0.tar.gz"
+  sha256 "5a07e6e8c4e6e37e0444025f9ca02223738b133c0529cb34a27c6668632b361f"
   license "MIT"
   head "https://github.com/wysaid/CameraCapture.git", branch: "main"
 
@@ -28,6 +28,12 @@ class Ccap < Formula
       #include <iostream>
 
       int main() {
+          // Set error callback (available since v1.2.0)
+          ccap::setErrorCallback([](ccap::ErrorCode errorCode, const std::string& description) {
+              std::cerr << "Camera Error - Code: " << static_cast<int>(errorCode) 
+                        << ", Description: " << description << std::endl;
+          });
+          
           ccap::Provider provider;
           auto devices = provider.findDeviceNames();
           std::cout << "Found " << devices.size() << " camera device(s)" << std::endl;
