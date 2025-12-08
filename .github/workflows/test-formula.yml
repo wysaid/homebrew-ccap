@@ -6,6 +6,7 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+    # Allow manual triggering
 
 permissions:
   contents: read
@@ -23,9 +24,14 @@ jobs:
 
       - name: Set up tap and install formula
         run: |
+          # Create the tap directory structure (Homebrew expects Formula/ subdirectory)
           TAP_DIR="$(brew --repository)/Library/Taps/wysaid/homebrew-ccap"
           mkdir -p "$TAP_DIR/Formula"
+          
+          # Copy the formula to the tap's Formula directory
           cp ccap.rb "$TAP_DIR/Formula/"
+          
+          # Install from the tap
           brew install --build-from-source wysaid/ccap/ccap
 
       - name: Verify installation
@@ -41,29 +47,34 @@ jobs:
         run: |
           CCAP_PREFIX=$(brew --prefix ccap)
           
-          cat > /tmp/test_ccap.cpp << 'EOFTEST'
+          # Create a test program
+          cat > /tmp/test_ccap.cpp << 'EOF'
           #include <ccap.h>
           #include <iostream>
           #include <string>
 
           int main() {
+              // Set error callback with std::string_view parameter (v1.3.2 API)
               ccap::setErrorCallback([](ccap::ErrorCode errorCode, std::string_view description) {
                   std::cerr << "Camera Error - Code: 0x" << std::hex << static_cast<int>(errorCode) 
                             << ", Description: " << description << std::endl;
               });
               
+              // Create provider and enumerate devices
               ccap::Provider provider;
               auto devices = provider.findDeviceNames();
               std::cout << "Found " << devices.size() << " camera device(s)" << std::endl;
               
+              // List all available devices
               for (size_t i = 0; i < devices.size(); ++i) {
                   std::cout << "  [" << i << "] " << devices[i] << std::endl;
               }
               
               return 0;
           }
-EOFTEST
+          EOF
           
+          # Compile the test program
           clang++ -std=c++17 /tmp/test_ccap.cpp \
               -I"$CCAP_PREFIX/include" \
               -L"$CCAP_PREFIX/lib" -lccap \
@@ -74,6 +85,84 @@ EOFTEST
               -framework Accelerate \
               -o /tmp/test_ccap
           
+          # Run the test
+          /tmp/test_ccap
+
+      - name: Cleanup
+        if: always()
+        run: |
+          brew uninstall ccap || true
+
+  # Linux test job - ccap now supports V4L2 on Linux
+  test-linux:
+    name: Test on Linux
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Set up tap and install formula
+        run: |
+          # Create the tap directory structure (Homebrew expects Formula/ subdirectory)
+          TAP_DIR="$(brew --repository)/Library/Taps/wysaid/homebrew-ccap"
+          mkdir -p "$TAP_DIR/Formula"
+          
+          # Copy the formula to the tap's Formula directory
+          cp ccap.rb "$TAP_DIR/Formula/"
+          
+          # Install from the tap
+          brew install --build-from-source wysaid/ccap/ccap
+
+      - name: Verify installation
+        run: |
+          brew list ccap
+          brew info ccap
+
+      - name: Run brew test
+        run: |
+          brew test ccap
+
+      - name: Test compilation with installed library
+        run: |
+          CCAP_PREFIX=$(brew --prefix ccap)
+          
+          # Create a test program
+          cat > /tmp/test_ccap.cpp << 'EOF'
+          #include <ccap.h>
+          #include <iostream>
+          #include <string>
+
+          int main() {
+              // Set error callback with std::string_view parameter (v1.3.2 API)
+              ccap::setErrorCallback([](ccap::ErrorCode errorCode, std::string_view description) {
+                  std::cerr << "Camera Error - Code: 0x" << std::hex << static_cast<int>(errorCode) 
+                            << ", Description: " << description << std::endl;
+              });
+              
+              // Create provider and enumerate devices
+              ccap::Provider provider;
+              auto devices = provider.findDeviceNames();
+              std::cout << "Found " << devices.size() << " camera device(s)" << std::endl;
+              
+              // List all available devices
+              for (size_t i = 0; i < devices.size(); ++i) {
+                  std::cout << "  [" << i << "] " << devices[i] << std::endl;
+              }
+              
+              return 0;
+          }
+          EOF
+          
+          # Compile the test program
+          clang++ -std=c++17 /tmp/test_ccap.cpp \
+              -I"$CCAP_PREFIX/include" \
+              -L"$CCAP_PREFIX/lib" -lccap \
+              -o /tmp/test_ccap
+          
+          # Run the test
           /tmp/test_ccap
 
       - name: Cleanup
