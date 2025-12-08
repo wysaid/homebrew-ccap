@@ -7,7 +7,18 @@ class Ccap < Formula
   head "https://github.com/wysaid/CameraCapture.git", branch: "main"
 
   depends_on "cmake" => :build
-  depends_on :macos
+
+  # Platform-specific system dependencies
+  # Note: ccap uses system frameworks/libraries, no additional brew packages needed
+  on_macos do
+    # macOS: Uses AVFoundation framework (linked automatically by CMake)
+    # Frameworks: Foundation, AVFoundation, CoreVideo, CoreMedia, Accelerate
+  end
+
+  on_linux do
+    # Linux: Uses V4L2 for camera capture (part of kernel)
+    # pthread is linked automatically by CMake
+  end
 
   def install
     system "cmake", "-S", ".", "-B", "build",
@@ -48,13 +59,21 @@ class Ccap < Formula
       }
     EOS
 
-    system ENV.cxx, "test.cpp", "-std=c++17", "-I#{include}", "-L#{lib}", "-lccap",
-           "-framework", "Foundation",
-           "-framework", "AVFoundation",
-           "-framework", "CoreVideo",
-           "-framework", "CoreMedia",
-           "-framework", "Accelerate",
-           "-o", "test"
+    # Platform-specific compilation flags
+    if OS.mac?
+      system ENV.cxx, "test.cpp", "-std=c++17", "-I#{include}", "-L#{lib}", "-lccap",
+             "-framework", "Foundation",
+             "-framework", "AVFoundation",
+             "-framework", "CoreVideo",
+             "-framework", "CoreMedia",
+             "-framework", "Accelerate",
+             "-o", "test"
+    elsif OS.linux?
+      system ENV.cxx, "test.cpp", "-std=c++17", "-I#{include}", "-L#{lib}", "-lccap",
+             "-pthread",
+             "-o", "test"
+    end
+    
     system "./test"
   end
 end
