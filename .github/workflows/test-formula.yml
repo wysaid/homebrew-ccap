@@ -1,0 +1,82 @@
+name: Test Formula
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-macos:
+    name: Test on macOS
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Set up tap and install formula
+        run: |
+          TAP_DIR="$(brew --repository)/Library/Taps/wysaid/homebrew-ccap"
+          mkdir -p "$TAP_DIR/Formula"
+          cp ccap.rb "$TAP_DIR/Formula/"
+          brew install --build-from-source wysaid/ccap/ccap
+
+      - name: Verify installation
+        run: |
+          brew list ccap
+          brew info ccap
+
+      - name: Run brew test
+        run: |
+          brew test ccap
+
+      - name: Test compilation with installed library
+        run: |
+          CCAP_PREFIX=$(brew --prefix ccap)
+          
+          cat > /tmp/test_ccap.cpp << 'EOFTEST'
+          #include <ccap.h>
+          #include <iostream>
+          #include <string>
+
+          int main() {
+              ccap::setErrorCallback([](ccap::ErrorCode errorCode, std::string_view description) {
+                  std::cerr << "Camera Error - Code: 0x" << std::hex << static_cast<int>(errorCode) 
+                            << ", Description: " << description << std::endl;
+              });
+              
+              ccap::Provider provider;
+              auto devices = provider.findDeviceNames();
+              std::cout << "Found " << devices.size() << " camera device(s)" << std::endl;
+              
+              for (size_t i = 0; i < devices.size(); ++i) {
+                  std::cout << "  [" << i << "] " << devices[i] << std::endl;
+              }
+              
+              return 0;
+          }
+EOFTEST
+          
+          clang++ -std=c++17 /tmp/test_ccap.cpp \
+              -I"$CCAP_PREFIX/include" \
+              -L"$CCAP_PREFIX/lib" -lccap \
+              -framework Foundation \
+              -framework AVFoundation \
+              -framework CoreVideo \
+              -framework CoreMedia \
+              -framework Accelerate \
+              -o /tmp/test_ccap
+          
+          /tmp/test_ccap
+
+      - name: Cleanup
+        if: always()
+        run: |
+          brew uninstall ccap || true
