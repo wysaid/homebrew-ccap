@@ -2,6 +2,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Homebrew](https://img.shields.io/badge/Homebrew-ccap-blue.svg)](https://github.com/wysaid/homebrew-ccap)
+[![Test Formula](https://github.com/wysaid/homebrew-ccap/actions/workflows/test-formula.yml/badge.svg)](https://github.com/wysaid/homebrew-ccap/actions/workflows/test-formula.yml)
+[![Auto Update Formula](https://github.com/wysaid/homebrew-ccap/actions/workflows/auto-update.yml/badge.svg)](https://github.com/wysaid/homebrew-ccap/actions/workflows/auto-update.yml)
 
 A [Homebrew](https://brew.sh/) tap for [ccap](https://github.com/wysaid/CameraCapture) - a high-performance cross-platform camera capture library with hardware-accelerated pixel format conversion and complete C++/C APIs.
 
@@ -222,7 +224,7 @@ brew audit --strict --online ./Formula/ccap.rb
 
 ## Related Links
 
-- **Official Website**: [https://wysaid.org/CameraCapture/](https://wysaid.org/CameraCapture/) - Enhanced documentation with interactive examples
+- **Official Website**: <https://ccap.work>
 - **Main Repository**: [CameraCapture](https://github.com/wysaid/CameraCapture)
 - **Documentation**: [Build and Install Guide](https://github.com/wysaid/CameraCapture/blob/main/BUILD_AND_INSTALL.md)
 - **API Reference**: [Online API Documentation](https://wysaid.org/CameraCapture/api/)
@@ -236,4 +238,4 @@ This Homebrew tap is distributed under the MIT License, same as the ccap library
 
 ---
 
-**Note**: This is an unofficial tap maintained by the ccap project authors. For the most up-to-date information, please refer to the [main ccap repository](https://github.com/wysaid/CameraCapture).
+**Note**: This is the official Homebrew tap for ccap, maintained by the ccap project authors. For the most up-to-date information, please refer to the [main ccap repository](https://github.com/wysaid/CameraCapture).
