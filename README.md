@@ -133,8 +133,18 @@ int main() {
 
 This tap tracks the releases from the main [ccap repository](https://github.com/wysaid/CameraCapture).
 
-- Latest stable: v1.0.1
+- **Latest stable: v1.3.4** (2025-12-14)
 - Development: Use `brew install --HEAD ccap` for latest development version
+
+### Recent Updates (v1.3.4)
+
+- 🐛 Fixed RGB24/BGR24 pixel format conversion issues and AVX2 instruction crashes
+- 🪟 Improved frame orientation detection on Windows for all pixel formats
+- ⚙️ Added `CCAP_WIN_NO_DEVICE_VERIFY` CMake option for Windows device verification control
+- 📖 Enhanced web documentation with improved design
+- 🌐 Improved internationalization in code comments and documentation
+
+For full changelog, visit the [releases page](https://github.com/wysaid/CameraCapture/releases).
 
 ## Formula Information
 
@@ -212,9 +222,12 @@ brew audit --strict --online ./Formula/ccap.rb
 
 ## Related Links
 
+- **Official Website**: [https://wysaid.org/CameraCapture/](https://wysaid.org/CameraCapture/) - Enhanced documentation with interactive examples
 - **Main Repository**: [CameraCapture](https://github.com/wysaid/CameraCapture)
 - **Documentation**: [Build and Install Guide](https://github.com/wysaid/CameraCapture/blob/main/BUILD_AND_INSTALL.md)
+- **API Reference**: [Online API Documentation](https://wysaid.org/CameraCapture/api/)
 - **Examples**: [Usage Examples](https://github.com/wysaid/CameraCapture/tree/main/examples)
+- **Releases**: [Version History & Downloads](https://github.com/wysaid/CameraCapture/releases)
 - **Issues**: [Bug Reports](https://github.com/wysaid/CameraCapture/issues)
 
 ## License
