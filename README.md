@@ -40,9 +40,43 @@ brew install wysaid/ccap/ccap
 
 ## Usage
 
-After installation, you can use ccap in your C++ projects:
+After installation, you can use ccap in two ways:
 
-### CMake Integration
+### 1. Command-Line Tool (CLI)
+
+The `ccap-cli` tool provides quick access to camera capture functionality:
+
+```bash
+# List available cameras
+ccap-cli --list-devices
+
+# Show CLI version
+ccap-cli --version
+
+# Show help and all options
+ccap-cli --help
+
+# Capture a frame and save to file
+ccap-cli --output my-capture.bmp
+
+# Capture from a specific camera (by index)
+ccap-cli --device 0 --output frame.bmp
+
+# Capture with specific format
+ccap-cli --format RGB24 --output frame.bmp
+```
+
+The CLI tool is perfect for:
+- Quick camera testing
+- Scripting and automation
+- Frame capture without writing code
+- Debugging camera issues
+
+### 2. Library Integration
+
+Use ccap as a library in your C++ projects:
+
+#### CMake Integration
 
 ```cmake
 cmake_minimum_required(VERSION 3.14)
@@ -135,16 +169,15 @@ int main() {
 
 This tap tracks the releases from the main [ccap repository](https://github.com/wysaid/CameraCapture).
 
-- **Latest stable: v1.3.4** (2025-12-14)
+- **Latest stable: v1.4.0** (2025-12-24)
 - Development: Use `brew install --HEAD ccap` for latest development version
 
-### Recent Updates (v1.3.4)
+### Recent Updates (v1.4.0)
 
-- 🐛 Fixed RGB24/BGR24 pixel format conversion issues and AVX2 instruction crashes
-- 🪟 Improved frame orientation detection on Windows for all pixel formats
-- ⚙️ Added `CCAP_WIN_NO_DEVICE_VERIFY` CMake option for Windows device verification control
-- 📖 Enhanced web documentation with improved design
-- 🌐 Improved internationalization in code comments and documentation
+- 🛠️ **New CLI Tool**: Added `ccap-cli` command-line tool for quick camera testing and frame capture
+- 🐛 Fixed ProviderImp::grab timeout to respect values < 1000ms
+- ✨ Enhanced camera capture operations with standalone CLI interface
+- 📦 Both library and CLI tool are now installed by default
 
 For full changelog, visit the [releases page](https://github.com/wysaid/CameraCapture/releases).
 
@@ -166,8 +199,13 @@ brew list ccap
 # View installation info
 brew info ccap
 
-# Test the installation (if you have a camera)
-ccap-test-program  # If available from examples
+# Test the CLI tool
+ccap-cli --version
+ccap-cli --list-devices
+
+# Check library and headers
+ls $(brew --prefix ccap)/lib/
+ls $(brew --prefix ccap)/include/
 ```
 
 ## Troubleshooting
@@ -200,6 +238,40 @@ ccap-test-program  # If available from examples
 
 ## Development
 
+### Auto-Update Script
+
+This repository includes an automated update script to keep the formula in sync with upstream releases:
+
+```bash
+# Check if an update is available
+./update_formula.sh --check-only
+
+# Update to the latest version
+./update_formula.sh
+
+# Update to a specific version
+./update_formula.sh --version 1.4.0
+
+# Show help
+./update_formula.sh --help
+```
+
+The script will:
+1. Fetch the latest release from upstream
+2. Download and verify the source tarball
+3. Calculate the SHA256 checksum
+4. Update the formula file automatically
+5. Validate the changes
+
+After running the script, review and commit the changes:
+
+```bash
+git diff ccap.rb
+git add ccap.rb
+git commit -m "Update ccap to v1.4.0"
+git push
+```
+
 ### Local Testing
 
 To test the formula locally:
@@ -210,9 +282,9 @@ git clone https://github.com/wysaid/homebrew-ccap.git
 cd homebrew-ccap
 
 # Test the formula
-brew install --build-from-source ./Formula/ccap.rb
+brew install --build-from-source ./ccap.rb
 brew test ccap
-brew audit --strict --online ./Formula/ccap.rb
+brew audit --strict --online ./ccap.rb
 ```
 
 ### Contributing

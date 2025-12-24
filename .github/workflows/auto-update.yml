@@ -44,8 +44,16 @@ jobs:
             exit 1
           fi
           LATEST_VERSION=${LATEST_RELEASE#v}
+          
+          # Get release notes
+          RELEASE_NOTES=$(gh api repos/wysaid/CameraCapture/releases/latest --jq '.body' | head -20)
+          
           echo "version=$LATEST_VERSION" >> "$GITHUB_OUTPUT"
           echo "tag=$LATEST_RELEASE" >> "$GITHUB_OUTPUT"
+          
+          # Save release notes to file for PR body
+          echo "$RELEASE_NOTES" > /tmp/release_notes.txt
+          
           echo "Latest upstream version: $LATEST_RELEASE"
 
       - name: Check if update is needed
@@ -123,6 +131,17 @@ jobs:
 
             ### Upstream Release
             - [Release ${{ steps.upstream.outputs.tag }}](https://github.com/wysaid/CameraCapture/releases/tag/${{ steps.upstream.outputs.tag }})
+
+            ### Release Highlights
+            ```
+            $(cat /tmp/release_notes.txt || echo "See release page for details")
+            ```
+
+            ### Testing Checklist
+            - [ ] Formula installs successfully
+            - [ ] Library can be linked and used
+            - [ ] CLI tool (`ccap-cli`) works correctly
+            - [ ] Tests pass (`brew test ccap`)
 
             ---
             *Please review the changes and merge if everything looks correct.*

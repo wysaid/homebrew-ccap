@@ -1,8 +1,8 @@
 class Ccap < Formula
   desc "High-performance cross-platform camera capture library with hardware-accelerated pixel format conversion and complete C++/C APIs"
   homepage "https://github.com/wysaid/CameraCapture"
-  url "https://github.com/wysaid/CameraCapture/archive/refs/tags/v1.3.4.tar.gz"
-  sha256 "c70bccc3894e711685d29d89f5b844271ab50325dda2482adabad42040d44396"
+  url "https://github.com/wysaid/CameraCapture/archive/refs/tags/v1.4.0.tar.gz"
+  sha256 "a17fba5cc553c2efaad4c1c2bd1baab38ef39a01e47c869dc0c57f0a740b3679"
   license "MIT"
   head "https://github.com/wysaid/CameraCapture.git", branch: "main"
 
@@ -27,12 +27,14 @@ class Ccap < Formula
            "-DCCAP_BUILD_EXAMPLES=OFF",
            "-DCCAP_BUILD_TESTS=OFF",
            "-DCCAP_INSTALL=ON",
+           "-DBUILD_CCAP_CLI=ON",
            *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
   end
 
   test do
+    # Test the library API
     (testpath/"test.cpp").write <<~EOS
       #include <ccap.h>
       #include <iostream>
@@ -75,5 +77,9 @@ class Ccap < Formula
     end
     
     system "./test"
+    
+    # Test the CLI tool
+    assert_match "ccap CLI", shell_output("#{bin}/ccap-cli --version")
+    assert_match "Usage:", shell_output("#{bin}/ccap-cli --help")
   end
 end
