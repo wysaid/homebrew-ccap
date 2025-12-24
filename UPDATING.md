@@ -100,8 +100,8 @@ clang++ -std=c++17 test.cpp -I$(brew --prefix ccap)/include -L$(brew --prefix cc
     -o test && ./test
 
 # Test CLI tool
-ccap-cli --version
-ccap-cli --list-devices
+ccap --version
+ccap --list-devices
 ```
 
 ## Troubleshooting

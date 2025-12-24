@@ -8,9 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.4.0] - 2025-12-24
 
 ### Added
-- **CLI Tool Support**: Formula now installs `ccap-cli` command-line tool alongside the library
-  - Users can now use `ccap-cli --list-devices` to list cameras
-  - Quick frame capture with `ccap-cli --output frame.bmp`
+- **CLI Tool Support**: Formula now installs `ccap` command-line tool alongside the library
+  - Users can now use `ccap --list-devices` to list cameras
+  - Quick frame capture with `ccap --output frame.bmp`
   - Useful for testing, scripting, and debugging
 - **Auto-Update Script**: Added `update_formula.sh` for automated formula updates
   - Check for updates: `./update_formula.sh --check-only`

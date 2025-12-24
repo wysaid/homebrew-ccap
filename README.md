@@ -44,26 +44,26 @@ After installation, you can use ccap in two ways:
 
 ### 1. Command-Line Tool (CLI)
 
-The `ccap-cli` tool provides quick access to camera capture functionality:
+The `ccap` CLI tool provides quick access to camera capture functionality:
 
 ```bash
 # List available cameras
-ccap-cli --list-devices
+ccap --list-devices
 
 # Show CLI version
-ccap-cli --version
+ccap --version
 
 # Show help and all options
-ccap-cli --help
+ccap --help
 
 # Capture a frame and save to file
-ccap-cli --output my-capture.bmp
+ccap --output my-capture.bmp
 
 # Capture from a specific camera (by index)
-ccap-cli --device 0 --output frame.bmp
+ccap --device 0 --output frame.bmp
 
 # Capture with specific format
-ccap-cli --format RGB24 --output frame.bmp
+ccap --format RGB24 --output frame.bmp
 ```
 
 The CLI tool is perfect for:
@@ -174,7 +174,7 @@ This tap tracks the releases from the main [ccap repository](https://github.com/
 
 ### Recent Updates (v1.4.0)
 
-- 🛠️ **New CLI Tool**: Added `ccap-cli` command-line tool for quick camera testing and frame capture
+- 🛠️ **New CLI Tool**: Added `ccap` command-line tool for quick camera testing and frame capture
 - 🐛 Fixed ProviderImp::grab timeout to respect values < 1000ms
 - ✨ Enhanced camera capture operations with standalone CLI interface
 - 📦 Both library and CLI tool are now installed by default
@@ -200,8 +200,8 @@ brew list ccap
 brew info ccap
 
 # Test the CLI tool
-ccap-cli --version
-ccap-cli --list-devices
+ccap --version
+ccap --list-devices
 
 # Check library and headers
 ls $(brew --prefix ccap)/lib/

@@ -79,7 +79,7 @@ class Ccap < Formula
     system "./test"
     
     # Test the CLI tool
-    assert_match "ccap CLI", shell_output("#{bin}/ccap-cli --version")
-    assert_match "Usage:", shell_output("#{bin}/ccap-cli --help")
+    assert_match "ccap CLI", shell_output("#{bin}/ccap --version")
+    assert_match "Usage:", shell_output("#{bin}/ccap --help")
   end
 end
