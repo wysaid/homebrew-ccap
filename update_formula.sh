@@ -67,7 +67,7 @@ get_current_version() {
     fi
 
     local version
-    version=$(grep -oP 'url "https://github.com/wysaid/CameraCapture/archive/refs/tags/v\K[0-9]+\.[0-9]+\.[0-9]+[0-9a-zA-Z.-]*' "$FORMULA_FILE" || true)
+    version=$(grep -o 'url "https://github.com/wysaid/CameraCapture/archive/refs/tags/v[0-9][0-9.a-zA-Z-]*\.tar\.gz"' "$FORMULA_FILE" | sed -E 's|.*v([0-9]+\.[0-9]+\.[0-9]+[0-9a-zA-Z.-]*)\.tar\.gz"$|\1|' || true)
 
     if [[ -z "$version" ]]; then
         log_error "Could not extract current version from $FORMULA_FILE"
@@ -79,7 +79,7 @@ get_current_version() {
 
 # Get latest release version from GitHub
 get_latest_version() {
-    log_info "Fetching latest release from upstream..."
+    log_info "Fetching latest release from upstream..." >&2
 
     local response
     if command -v gh >/dev/null 2>&1; then
@@ -96,7 +96,7 @@ get_latest_version() {
     fi
 
     local tag_name
-    tag_name=$(echo "$response" | grep -oP '"tag_name":\s*"\K[^"]+' | head -1 || true)
+    tag_name=$(echo "$response" | grep -o '"tag_name"[^"]*"[^"]*"' | head -1 | sed -E 's/.*"tag_name"[^"]*"([^"]*)"$/\1/' || true)
 
     if [[ -z "$tag_name" ]]; then
         log_error "Could not parse tag name from GitHub API response"
@@ -113,14 +113,14 @@ get_sha256() {
     local url="https://github.com/$UPSTREAM_REPO/archive/refs/tags/v${version}.tar.gz"
     local tarball="$TEMP_DIR/ccap-${version}.tar.gz"
 
-    log_info "Downloading tarball from $url..."
+    log_info "Downloading tarball from $url..." >&2
 
     if ! curl -sSfL "$url" -o "$tarball"; then
         log_error "Failed to download tarball"
         exit 1
     fi
 
-    log_info "Calculating SHA256 checksum..."
+    log_info "Calculating SHA256 checksum..." >&2
 
     local sha256
     if command -v sha256sum >/dev/null 2>&1; then
@@ -148,7 +148,7 @@ get_release_notes() {
     if command -v gh >/dev/null 2>&1; then
         response=$(gh api "repos/$UPSTREAM_REPO/releases/tags/v${version}" --jq '.body' 2>/dev/null || echo "")
     else
-        response=$(curl -sSfL "https://api.github.com/repos/$UPSTREAM_REPO/releases/tags/v${version}" 2>/dev/null | grep -oP '"body":\s*"\K[^"]+' || echo "")
+        response=$(curl -sSfL "https://api.github.com/repos/$UPSTREAM_REPO/releases/tags/v${version}" 2>/dev/null | grep -o '"body"[^"]*"[^"]*"' | sed -E 's/.*"body"[^"]*"([^"]*)"$/\1/' || echo "")
     fi
 
     if [[ -n "$response" ]]; then
@@ -175,7 +175,7 @@ update_formula() {
     fi
 
     # Update SHA256
-    if ! sed -i.tmp "s|sha256 \"[a-f0-9]\{64\}\"|sha256 \"${new_sha256}\"|" "$FORMULA_FILE"; then
+    if ! sed -i.tmp -E "s|sha256 \"[a-f0-9]{64}\"|sha256 \"${new_sha256}\"|" "$FORMULA_FILE"; then
         log_error "Failed to update SHA256 in formula"
         mv "${FORMULA_FILE}.backup" "$FORMULA_FILE"
         exit 1
