@@ -27,7 +27,7 @@ class Ccap < Formula
            "-DCCAP_BUILD_EXAMPLES=OFF",
            "-DCCAP_BUILD_TESTS=OFF",
            "-DCCAP_INSTALL=ON",
-           "-DBUILD_CCAP_CLI=ON",
+           "-DCCAP_BUILD_CLI=ON",
            *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
