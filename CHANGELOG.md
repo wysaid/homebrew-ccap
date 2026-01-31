@@ -5,6 +5,21 @@ All notable changes to this Homebrew tap will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2025-12-30
+
+### Added
+- **Video File Playback**: Added file playback support on Windows (Media Foundation) and macOS (AVFoundation)
+
+### Changed
+- Updated ccap to upstream version v1.5.0
+- Added MSVC 2026 and MinGW workflow support (upstream)
+- Optimized CI workflows with caching strategies (upstream)
+
+### Upstream Changes (v1.5.0)
+- 🎥 Added video file playback support for Windows and macOS
+- 🧰 Added MSVC 2026 and MinGW workflow support
+- ⚡ Optimized GitHub Actions workflows with caching strategies
+
 ## [1.4.0] - 2025-12-24
 
 ### Added
@@ -47,6 +62,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Initial public release of Homebrew tap
 - Formula for ccap (CameraCapture) library
 
+[1.5.0]: https://github.com/wysaid/homebrew-ccap/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/wysaid/homebrew-ccap/compare/v1.3.4...v1.4.0
 [1.3.4]: https://github.com/wysaid/homebrew-ccap/releases/tag/v1.3.4
 [1.3.2]: https://github.com/wysaid/homebrew-ccap/releases/tag/v1.3.2

@@ -169,15 +169,14 @@ int main() {
 
 This tap tracks the releases from the main [ccap repository](https://github.com/wysaid/CameraCapture).
 
-- **Latest stable: v1.4.0** (2025-12-24)
+- **Latest stable: v1.5.0** (2025-12-30)
 - Development: Use `brew install --HEAD ccap` for latest development version
 
-### Recent Updates (v1.4.0)
+### Recent Updates (v1.5.0)
 
-- 🛠️ **New CLI Tool**: Added `ccap` command-line tool for quick camera testing and frame capture
-- 🐛 Fixed ProviderImp::grab timeout to respect values < 1000ms
-- ✨ Enhanced camera capture operations with standalone CLI interface
-- 📦 Both library and CLI tool are now installed by default
+- 🎥 **Video File Playback**: Added file playback support on Windows (Media Foundation) and macOS (AVFoundation)
+- 🧰 **Toolchain Support**: Added MSVC 2026 and MinGW workflow support
+- ⚡ **CI Improvements**: Optimized GitHub Actions workflows with caching strategies
 
 For full changelog, visit the [releases page](https://github.com/wysaid/CameraCapture/releases).
 
@@ -250,7 +249,7 @@ This repository includes an automated update script to keep the formula in sync 
 ./update_formula.sh
 
 # Update to a specific version
-./update_formula.sh --version 1.4.0
+./update_formula.sh --version 1.5.0
 
 # Show help
 ./update_formula.sh --help
@@ -268,7 +267,7 @@ After running the script, review and commit the changes:
 ```bash
 git diff ccap.rb
 git add ccap.rb
-git commit -m "Update ccap to v1.4.0"
+git commit -m "Update ccap to v1.5.0"
 git push
 ```
 
