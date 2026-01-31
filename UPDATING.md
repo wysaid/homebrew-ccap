@@ -42,7 +42,7 @@ If you prefer to update manually:
 
 ```bash
 # 1. Check upstream for latest version
-NEW_VERSION="1.4.0"
+NEW_VERSION="1.5.0"
 
 # 2. Download and calculate SHA256
 curl -sSfL "https://github.com/wysaid/CameraCapture/archive/refs/tags/v${NEW_VERSION}.tar.gz" -o /tmp/ccap.tar.gz
@@ -159,14 +159,14 @@ brew install --build-from-source --verbose ./ccap.rb
 4. **Use descriptive commits**
    ```bash
    # Good
-   git commit -m "Update ccap to v1.4.0 - adds CLI tool"
+   git commit -m "Update ccap to v1.5.0 - adds video playback"
    
    # Also good
-   git commit -m "Update ccap to v1.4.0
+   git commit -m "Update ccap to v1.5.0
 
-   - Added CLI tool support
-   - Fixed timeout handling
-   - Updated dependencies"
+   - Added video file playback support
+   - Added MSVC 2026/MinGW workflow support
+   - Optimized CI workflow"
    ```
 
 ## Automation Tips
