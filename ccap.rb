@@ -80,6 +80,6 @@ class Ccap < Formula
     
     # Test the CLI tool
     assert_match "ccap version", shell_output("#{bin}/ccap --version")
-    assert_match "Usage:", shell_output("#{bin}/ccap --help")
+    assert_match "usage:", shell_output("#{bin}/ccap --help")
   end
 end
