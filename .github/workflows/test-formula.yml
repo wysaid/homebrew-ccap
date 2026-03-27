@@ -25,9 +25,7 @@ jobs:
 
       - name: Set up Homebrew
         uses: Homebrew/actions/setup-homebrew@master
-
-      - name: Register local tap
-        run: brew tap wysaid/ccap "$(pwd)"
+        # setup-homebrew auto-taps this repo as wysaid/ccap from GitHub remote
 
       - name: Install from source
         run: HOMEBREW_NO_INSTALL_FROM_API=1 brew install --build-from-source --verbose wysaid/ccap/ccap
