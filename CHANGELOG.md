@@ -5,6 +5,28 @@ All notable changes to this Homebrew tap will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.0] - 2026-03-28
+
+### Changed
+- Updated ccap to upstream version v1.7.0
+
+### Upstream Changes (v1.7.0)
+- 📦 Added JSON output support to CLI (`--json` flag for structured output)
+- 🧩 Added publishable ClawHub/OpenClaw skill bundle (`skills/ccap/`)
+- 🔒 Tightened CLI JSON contract and test parser (RFC 8259 compliance)
+- 🐧 Improved Linux JSON error handling for video file commands
+
+## [1.6.0] - 2026-03-21
+
+### Changed
+- Updated ccap to upstream version v1.6.0
+
+### Upstream Changes (v1.6.0)
+- 🪟 Added MSMF (Media Foundation) backend on Windows with DirectShow fallback
+- 🤝 DirectShow remains the default for strong virtual-camera compatibility
+- 🔁 Auto mode merges device lists from both Windows backends
+- 🛠️ Fixed NEON precision bug, improved Windows build toolchain
+
 ## [1.5.0] - 2025-12-30
 
 ### Added
@@ -62,6 +84,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Initial public release of Homebrew tap
 - Formula for ccap (CameraCapture) library
 
+[1.7.0]: https://github.com/wysaid/homebrew-ccap/compare/v1.6.0...v1.7.0
+[1.6.0]: https://github.com/wysaid/homebrew-ccap/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/wysaid/homebrew-ccap/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/wysaid/homebrew-ccap/compare/v1.3.4...v1.4.0
 [1.3.4]: https://github.com/wysaid/homebrew-ccap/releases/tag/v1.3.4
