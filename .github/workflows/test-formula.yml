@@ -28,7 +28,7 @@ jobs:
         # setup-homebrew auto-taps this repo as wysaid/ccap from GitHub remote
 
       - name: Install from source
-        run: HOMEBREW_NO_INSTALL_FROM_API=1 brew install --build-from-source --verbose wysaid/ccap/ccap
+        run: brew install --build-from-source --verbose wysaid/ccap/ccap
 
       - name: brew test
         run: brew test wysaid/ccap/ccap
